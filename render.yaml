@@ -12,7 +12,7 @@ services:
     runtime: node
     plan: free
     region: singapore
-    buildCommand: corepack enable && pnpm install --frozen-lockfile && pnpm --filter @nexus/api build
+    buildCommand: npx -y pnpm@12.11.2 install --frozen-lockfile && npx -y pnpm@12.11.2 --filter @nexus/api build
     startCommand: cd apps/api && node dist/server.js
     healthCheckPath: /healthz
     envVars:
