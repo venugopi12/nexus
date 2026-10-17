@@ -27,7 +27,7 @@ services:
           name: nexus-db
           property: connectionString
       - key: WEB_ORIGIN
-        value: https://nexus-web.vercel.app
+        value: https://nexus-web-gray-nine.vercel.app
       - key: COOKIE_SECURE
         value: "true"
       - key: SIM_ENABLED
