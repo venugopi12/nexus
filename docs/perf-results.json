@@ -1,0 +1,56 @@
+{
+  "measuredAt": "2026-10-13T14:07:24.918Z",
+  "machine": "Apple M4 \u00b7 10 cores \u00b7 16 GB \u00b7 node v24.14.1",
+  "base": "http://localhost:4273",
+  "runs": {
+    "coldLoad": {
+      "runs": 5,
+      "median": {
+        "fcp": 72,
+        "lcp": 612,
+        "cls": 0.0164,
+        "tbt": 0,
+        "dcl": 24,
+        "load": 24
+      },
+      "note": "Byte counts omitted: the capture used content-length, which the preview server does not send. Use the gzip bundle table in docs/performance.md (from the build output)."
+    },
+    "eventStream": {
+      "totalRows": 73923,
+      "domRowsAtTop": 37,
+      "domRowsAfterScrollToEnd": 38,
+      "totalDomNodes": 806,
+      "scroll": {
+        "steps": 120,
+        "elapsedMs": 1987,
+        "frameP50": 16.7,
+        "frameP95": 16.8,
+        "frameMax": 16.8,
+        "framesOver50ms": 0
+      }
+    },
+    "commandPalette": {
+      "runs": 8,
+      "openMsMedian": 12,
+      "typeToResultMsMedian": 7,
+      "interactionDurationsMs": {
+        "count": 147,
+        "p50": 16,
+        "max": 56
+      },
+      "note": "wall-clock around Playwright actions; includes Playwright round-trip overhead"
+    },
+    "liveIdle20s": {
+      "longTasks": 0,
+      "longestMs": 0,
+      "totalBlockingMs": 0
+    },
+    "memoryAfterNavigation": {
+      "navigations": 48,
+      "heapBeforeMB": 14.2,
+      "heapAfterMB": 16,
+      "deltaMB": 1.8,
+      "note": "after forced GC; routes cycled 6\u00d7"
+    }
+  }
+}

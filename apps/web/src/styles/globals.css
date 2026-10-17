@@ -1,0 +1,194 @@
+@import 'tailwindcss';
+@import '@fontsource-variable/inter';
+@import '@fontsource-variable/jetbrains-mono';
+@import 'tw-animate-css';
+
+@custom-variant dark (&:is(.dark *));
+
+/* ---------------------------------------------------------------------------
+   NEXUS design tokens.
+   Dark-first graphite surfaces, restrained indigo/violet accent. Green / amber /
+   red are reserved exclusively for operational status.
+   --------------------------------------------------------------------------- */
+:root {
+  --radius: 0.625rem;
+
+  --background: #f5f6fa;
+  --foreground: #12141c;
+  --card: #ffffff;
+  --card-foreground: #12141c;
+  --popover: #ffffff;
+  --popover-foreground: #12141c;
+  --primary: #5b5bf0;
+  --primary-foreground: #ffffff;
+  --secondary: #eceef6;
+  --secondary-foreground: #1d2030;
+  --muted: #eef0f7;
+  --muted-foreground: #5d6579;
+  --accent: #e9eafc;
+  --accent-foreground: #3737c4;
+  --destructive: #d92d3a;
+  --border: #e1e4ee;
+  --input: #d5d9e6;
+  --ring: #5b5bf0;
+
+  --surface-1: #ffffff;
+  --surface-2: #f0f2f8;
+  --surface-3: #e7e9f3;
+  --border-strong: #cdd2e2;
+  --text-subtle: #7b8397;
+  --violet: #8a5cf6;
+
+  --ok: #0f9d6b;
+  --ok-soft: #dcf5ea;
+  --warn: #b7791f;
+  --warn-soft: #fdf0d3;
+  --crit: #d92d3a;
+  --crit-soft: #fde3e5;
+  --info: #3b6fe0;
+
+  --shadow-sm: 0 1px 2px rgb(18 20 28 / 0.06);
+  --shadow-md: 0 4px 14px -2px rgb(18 20 28 / 0.1), 0 2px 4px -2px rgb(18 20 28 / 0.06);
+  --shadow-lg: 0 16px 40px -8px rgb(18 20 28 / 0.18), 0 4px 10px -4px rgb(18 20 28 / 0.08);
+  --chart-grid: #e6e9f2;
+  --chart-text: #6b7388;
+}
+
+.dark {
+  --background: #090a0e;
+  --foreground: #e9ebf2;
+  --card: #0f1116;
+  --card-foreground: #e9ebf2;
+  --popover: #12141b;
+  --popover-foreground: #e9ebf2;
+  --primary: #6e6bf5;
+  --primary-foreground: #ffffff;
+  --secondary: #171a23;
+  --secondary-foreground: #e9ebf2;
+  --muted: #151821;
+  --muted-foreground: #9aa2b6;
+  --accent: #1c1f33;
+  --accent-foreground: #b6b8ff;
+  --destructive: #f0626d;
+  --border: #1f2330;
+  --input: #2a2f40;
+  --ring: #7c79ff;
+
+  --surface-1: #0f1116;
+  --surface-2: #14171f;
+  --surface-3: #1a1e29;
+  --border-strong: #2b3042;
+  --text-subtle: #697288;
+  --violet: #a78bfa;
+
+  --ok: #3ddc97;
+  --ok-soft: rgb(61 220 151 / 0.12);
+  --warn: #f5b942;
+  --warn-soft: rgb(245 185 66 / 0.13);
+  --crit: #f56472;
+  --crit-soft: rgb(245 100 114 / 0.14);
+  --info: #6ea0ff;
+
+  --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.5);
+  --shadow-md: 0 6px 18px -4px rgb(0 0 0 / 0.55), 0 0 0 1px rgb(255 255 255 / 0.02);
+  --shadow-lg: 0 24px 56px -12px rgb(0 0 0 / 0.7), 0 0 0 1px rgb(255 255 255 / 0.04);
+  --chart-grid: #1c202c;
+  --chart-text: #8189a0;
+}
+
+@theme inline {
+  --font-sans: 'Inter Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono Variable', ui-monospace, 'SF Mono', Menlo, monospace;
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-surface-1: var(--surface-1);
+  --color-surface-2: var(--surface-2);
+  --color-surface-3: var(--surface-3);
+  --color-border-strong: var(--border-strong);
+  --color-subtle: var(--text-subtle);
+  --color-violet: var(--violet);
+  --color-ok: var(--ok);
+  --color-ok-soft: var(--ok-soft);
+  --color-warn: var(--warn);
+  --color-warn-soft: var(--warn-soft);
+  --color-crit: var(--crit);
+  --color-crit-soft: var(--crit-soft);
+  --color-info: var(--info);
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  --shadow-xs: var(--shadow-sm);
+  --shadow-card: var(--shadow-md);
+  --shadow-pop: var(--shadow-lg);
+
+  /* type scale */
+  --text-2xs: 0.6875rem;
+  --text-2xs--line-height: 1rem;
+
+  /* motion tokens (consumed by CSS transitions; Motion variants live in lib/motion.ts) */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --animate-pulse-dot: pulse-dot 2s var(--ease-out-expo) infinite;
+}
+
+@keyframes pulse-dot {
+  0% { box-shadow: 0 0 0 0 color-mix(in oklab, currentColor 45%, transparent); }
+  70%, 100% { box-shadow: 0 0 0 6px transparent; }
+}
+
+@layer base {
+  * { @apply border-border; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-feature-settings: 'cv11', 'ss01', 'tnum' 0;
+    overflow-x: hidden;
+    text-rendering: optimizeLegibility;
+  }
+  /* grid/flex children may shrink below their content (charts, tables) instead of forcing page overflow */
+  .grid > *, .flex > * { min-width: 0; }
+  :focus-visible { outline: 2px solid var(--ring); outline-offset: 2px; border-radius: 4px; }
+  ::selection { background: color-mix(in oklab, var(--primary) 35%, transparent); }
+  /* quiet scrollbars */
+  * { scrollbar-width: thin; scrollbar-color: var(--border-strong) transparent; }
+  .tabular { font-variant-numeric: tabular-nums; }
+}
+
+@layer components {
+  .card {
+    @apply rounded-xl border border-border bg-card shadow-xs;
+  }
+  .card-header { @apply flex items-center justify-between gap-2 px-4 pt-3.5 pb-2; }
+  .eyebrow { @apply text-2xs font-medium uppercase tracking-[0.08em] text-subtle; }
+  .kbd {
+    @apply inline-flex h-5 min-w-5 items-center justify-center rounded border border-border-strong bg-surface-2 px-1 font-mono text-[10px] text-muted-foreground;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}

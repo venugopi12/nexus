@@ -1,0 +1,40 @@
+{
+  "name": "@nexus/api",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch --env-file-if-exists=../../.env src/server.ts",
+    "start": "node --env-file-if-exists=../../.env dist/server.js",
+    "build": "tsup",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "tsx --env-file-if-exists=../../.env src/db/migrate.ts",
+    "db:seed": "tsx --env-file-if-exists=../../.env src/seed/index.ts",
+    "db:embedded": "tsx --env-file-if-exists=../../.env src/db/embedded.ts",
+    "db:reset": "tsx --env-file-if-exists=../../.env src/db/reset.ts"
+  },
+  "dependencies": {
+    "@fastify/cookie": "^11.0.2",
+    "@fastify/cors": "^11.0.1",
+    "@nexus/shared": "workspace:*",
+    "argon2": "^0.44.0",
+    "drizzle-orm": "^0.45.0",
+    "fastify": "^5.6.0",
+    "pino": "^9.9.0",
+    "postgres": "^3.4.7",
+    "socket.io": "^4.8.1",
+    "zod": "^4.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "drizzle-kit": "^0.31.4",
+    "embedded-postgres": "18.4.0-beta.17",
+    "socket.io-client": "^4.8.1",
+    "tsup": "^8.5.0",
+    "tsx": "^4.20.5",
+    "typescript": "~5.9.3",
+    "vitest": "^3.2.4"
+  }
+}

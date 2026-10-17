@@ -1,0 +1,54 @@
+name: CI
+on:
+  push: { branches: [main] }
+  pull_request:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: pnpm }
+      - run: pnpm install --frozen-lockfile
+      - name: Typecheck
+        run: pnpm typecheck
+      - name: Lint
+        run: pnpm lint
+      - name: Unit & integration tests (shared, web, api with embedded Postgres)
+        run: pnpm test
+      - name: Production build
+        run: pnpm build
+
+  e2e:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    needs: verify
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: pnpm }
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm --filter @nexus/web exec playwright install --with-deps chromium
+      - name: Start database, migrate, seed, run API + web
+        run: |
+          cp .env.example .env
+          pnpm dev:db > /tmp/pg.log 2>&1 &
+          sleep 12
+          pnpm db:migrate && pnpm db:seed
+          pnpm dev > /tmp/dev.log 2>&1 &
+          npx --yes wait-on http://localhost:4000/readyz http://localhost:5273
+      - run: pnpm e2e
+      - if: failure()
+        uses: actions/upload-artifact@v4
+        with: { name: playwright, path: apps/web/test-results }
+
+  docker:
+    runs-on: ubuntu-latest
+    needs: verify
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker compose build

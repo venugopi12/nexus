@@ -1,0 +1,12 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "lib": ["ES2023", "DOM", "DOM.Iterable"],
+    "types": ["vite/client", "vitest/globals", "@testing-library/jest-dom"],
+    "baseUrl": ".",
+    "paths": { "@/*": ["src/*"], "@nexus/shared": ["../../packages/shared/src/core.ts"], "@nexus/shared/schemas": ["../../packages/shared/src/schemas.ts"] },
+    "noEmit": true
+  },
+  "include": ["src", "vite.config.ts", "e2e", "playwright.config.ts"]
+}

@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="dark light" />
+    <meta name="description" content="NEXUS — real-time incident management and observability command center." />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>NEXUS — Incident &amp; Observability Command Center</title>
+    <script>
+      try {
+        var t = localStorage.getItem('nexus-theme');
+        var dark = t ? t === 'dark' : true; /* dark-first */
+        document.documentElement.classList.toggle('dark', dark);
+        document.documentElement.style.colorScheme = dark ? 'dark' : 'light';
+      } catch (e) {}
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

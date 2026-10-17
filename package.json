@@ -1,0 +1,27 @@
+{
+  "name": "nexus",
+  "private": true,
+  "version": "0.1.0",
+  "packageManager": "pnpm@12.11.2",
+  "scripts": {
+    "dev": "pnpm -r --parallel --filter @nexus/api --filter @nexus/web dev",
+    "dev:db": "pnpm --filter @nexus/api db:embedded",
+    "build": "pnpm -r build",
+    "test": "pnpm -r test",
+    "typecheck": "pnpm -r typecheck",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "db:migrate": "pnpm --filter @nexus/api db:migrate",
+    "db:seed": "pnpm --filter @nexus/api db:seed",
+    "db:reset": "pnpm --filter @nexus/api db:reset",
+    "e2e": "pnpm --filter @nexus/web e2e"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.0",
+    "eslint": "^9.39.0",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "prettier": "^3.6.2",
+    "typescript": "~5.9.3",
+    "typescript-eslint": "^8.46.0"
+  }
+}

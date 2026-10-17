@@ -1,0 +1,49 @@
+# NEXUS — full stack: PostgreSQL + API (+ simulator, alert evaluator, Socket.IO) + web (nginx).
+#   docker compose up --build
+#   docker compose run --rm api node dist/seed.js     # deterministic demo data (first run)
+# Then open http://localhost:8080
+services:
+  postgres:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_USER: nexus
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-nexus}
+      POSTGRES_DB: nexus
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U nexus -d nexus"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  api:
+    build:
+      context: .
+      dockerfile: infrastructure/docker/api.Dockerfile
+    environment:
+      NODE_ENV: production
+      PORT: 4000
+      DATABASE_URL: postgres://nexus:${POSTGRES_PASSWORD:-nexus}@postgres:5432/nexus
+      WEB_ORIGIN: ${WEB_ORIGIN:-http://localhost:8080}
+      COOKIE_SECURE: ${COOKIE_SECURE:-false}
+      SIM_ENABLED: "true"
+      SIM_CHAOS: ${SIM_CHAOS:-on}
+      AI_PROVIDER: ${AI_PROVIDER:-none}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+      SEED_PASSWORD: ${SEED_PASSWORD:-nexus-demo-2026}
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  web:
+    build:
+      context: .
+      dockerfile: infrastructure/docker/web.Dockerfile
+    ports:
+      - "8080:80"
+    depends_on:
+      - api
+
+volumes:
+  pgdata:
