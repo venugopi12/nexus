@@ -4,6 +4,12 @@ import type { EventDto, HealthStatus } from '@nexus/shared';
 import { EventBuffer } from './eventBuffer';
 import { LiveClient, type ConnectionStatus } from './liveClient';
 
+// Hosts that proxy /socket.io over plain HTTP (e.g. a Vercel rewrite) cannot upgrade to WebSocket: set VITE_SOCKET_TRANSPORTS=polling there.
+const SOCKET_TRANSPORTS = ((import.meta.env.VITE_SOCKET_TRANSPORTS as string | undefined) ?? 'websocket,polling')
+  .split(',')
+  .map((t) => t.trim())
+  .filter((t): t is 'websocket' | 'polling' => t === 'websocket' || t === 'polling');
+
 export interface LiveService { status: HealthStatus; errorRate: number; p95: number; p99: number; rps: number; avgLatency: number }
 
 interface LiveState {
@@ -51,7 +57,7 @@ export function startLive(env: string) {
   }
   currentEnv = env;
   client = new LiveClient({
-    socketFactory: () => io({ withCredentials: true, reconnection: false, transports: ['websocket', 'polling'], timeout: 8000 }) as never,
+    socketFactory: () => io({ withCredentials: true, reconnection: false, transports: SOCKET_TRANSPORTS, timeout: 8000 }) as never,
     handlers: {
       onStatus: (status, info) => useLive.setState({ status, attempt: info.attempt, nextRetryMs: info.nextRetryMs }),
       onEvents: (batch) => {

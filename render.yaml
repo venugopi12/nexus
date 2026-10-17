@@ -1,0 +1,44 @@
+# Render Blueprint — NEXUS API (Fastify + Socket.IO + simulator) and its PostgreSQL database.
+# The web app is deployed separately on Vercel (apps/web/vercel.json) and proxies /api and /socket.io here.
+databases:
+  - name: nexus-db
+    plan: free
+    databaseName: nexus
+    user: nexus
+
+services:
+  - type: web
+    name: nexus-api
+    runtime: node
+    plan: free
+    region: singapore
+    buildCommand: corepack enable && pnpm install --frozen-lockfile && pnpm --filter @nexus/api build
+    startCommand: cd apps/api && node dist/server.js
+    healthCheckPath: /healthz
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      - key: NODE_ENV
+        value: production
+      - key: HOST
+        value: 0.0.0.0
+      - key: DATABASE_URL
+        fromDatabase:
+          name: nexus-db
+          property: connectionString
+      - key: WEB_ORIGIN
+        value: https://nexus-web.vercel.app
+      - key: COOKIE_SECURE
+        value: "true"
+      - key: SIM_ENABLED
+        value: "true"
+      - key: SIM_CHAOS
+        value: "on"
+      - key: AI_PROVIDER
+        value: none
+      - key: SEED_IF_EMPTY
+        value: "true"
+      - key: SEED_EVENT_DAYS
+        value: "3"
+      - key: SEED_PASSWORD
+        value: nexus-demo-2026
